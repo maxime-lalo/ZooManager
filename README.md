@@ -39,6 +39,7 @@ A list of technologies used within the project:
 * [NodeJs](https://nodejs.org/en/download/): Version 14.16.0
 * [Git](https://git-scm.com/downloads): Version 2.31.1
 * [npm](https://www.npmjs.com/): Version 7.8.0
+* [bcrypt](https://www.npmjs.com/package/bcrypt): Version 5.0.1
 * [dotenv](https://www.npmjs.com/package/dotenv): Version 8.2.0
 * [express](https://www.npmjs.com/package/express): Version 4.17.1
 * [mysql2](https://www.npmjs.com/package/mysql2): Version 2.2.5
