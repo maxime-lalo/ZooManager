@@ -1,6 +1,7 @@
 {
   "name": "zoomanager",
   "version": "1.0.0",
+  "licence": "GPL v3",
   "description": "",
   "main": "index.js",
   "scripts": {
