@@ -1,11 +1,13 @@
 import {Dialect, ModelCtor, Sequelize} from "sequelize";
 import userCreator, {UserInstance} from "./user.model";
 import sessionCreator, {SessionInstance} from "./session.model";
+import roleCreator, {RoleInstance} from "./role.model";
 
 export interface SequelizeManagerProps {
     sequelize: Sequelize;
     User: ModelCtor<UserInstance>;
     Session: ModelCtor<SessionInstance>;
+    Role: ModelCtor<RoleInstance>;
 }
 
 export class SequelizeManager {
@@ -15,6 +17,7 @@ export class SequelizeManager {
     sequelize: Sequelize;
     User: ModelCtor<UserInstance>;
     Session: ModelCtor<SessionInstance>;
+    Role: ModelCtor<RoleInstance>;
 
     public static async getInstance(): Promise<SequelizeManager> {
         if (SequelizeManager.instance === undefined) {
@@ -36,7 +39,8 @@ export class SequelizeManager {
         const managerProps: SequelizeManagerProps = {
             sequelize,
             User: userCreator(sequelize),
-            Session: sessionCreator(sequelize)
+            Session: sessionCreator(sequelize),
+            Role: roleCreator(sequelize)
         }
         SequelizeManager.associate(managerProps);
         await sequelize.sync({
@@ -54,6 +58,7 @@ export class SequelizeManager {
         this.sequelize = props.sequelize;
         this.User = props.User;
         this.Session = props.Session;
+        this.Role = props.Role;
     }
 
 }
