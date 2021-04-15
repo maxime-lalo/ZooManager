@@ -1,5 +1,5 @@
 [comment]: <> (![Zoo Manager]&#40;https://i.ibb.co/rtxbGps/coollogo-com-1544035.png&#41;)
-<p style="text-align:center">
+<p align="center">
     <img src="https://i.ibb.co/rtxbGps/coollogo-com-1544035.png" alt="Zoo Manager" />
 </p>
 
