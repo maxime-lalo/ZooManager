@@ -37,7 +37,7 @@ export default function(sequelize: Sequelize): ModelCtor<PassSpaceInstance> {
             autoIncrement: true
         },*/
         order: {
-            type: DataTypes.NUMBER,
+            type: DataTypes.DOUBLE,
         },
     }, {
         freezeTableName: true,

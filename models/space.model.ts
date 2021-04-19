@@ -41,7 +41,7 @@ export default function(sequelize: Sequelize): ModelCtor<SpaceInstance> {
             type: DataTypes.STRING,
         },
         capacity: {
-            type: DataTypes.NUMBER,
+            type: DataTypes.DOUBLE,
         },
         duration: {
             type: DataTypes.DATE,
