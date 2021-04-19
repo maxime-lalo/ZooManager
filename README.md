@@ -52,6 +52,7 @@ A list of technologies used within the project:
 ```
 $ git clone https://github.com/LPiz05/ZooManager
 $ cd ZooManager
+$ cp .env.exemple .env  // Change values in .env file
 $ npm install
 $ npm start
 ```
