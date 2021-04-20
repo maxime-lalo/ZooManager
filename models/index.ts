@@ -84,7 +84,7 @@ export class SequelizeManager {
         }
         SequelizeManager.associate(managerProps);
         await sequelize.sync({
-            //force: true // reinitialise la bdd COMPLETEMENT
+            force: true // reinitialise la bdd COMPLETEMENT
         });
         return new SequelizeManager(managerProps);
     }
@@ -92,6 +92,11 @@ export class SequelizeManager {
     private static associate(props: SequelizeManagerProps): void {
         props.User.hasMany(props.Session); // User N Session
         props.Session.belongsTo(props.User); // Session 1 User
+
+        props.Space.hasMany(props.Animal); // Space N Animal
+        props.Animal.belongsTo(props.Space); // Animal 1 Space
+
+        props.Role.hasOne(props.User); // Un user a un rôle
     }
 
     private constructor(props: SequelizeManagerProps) {

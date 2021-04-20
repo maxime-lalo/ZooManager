@@ -4,9 +4,13 @@ import {
     Model,
     DataTypes,
     ModelCtor,
-    HasManyGetAssociationsMixin, HasManyAddAssociationsMixin
+    HasManyGetAssociationsMixin,
+    HasManyAddAssociationsMixin,
+    BelongsToSetAssociationMixin,
+    BelongsToGetAssociationMixin
 } from "sequelize";
 import {SessionInstance} from "./session.model";
+import {RoleInstance} from "./role.model";
 
 export interface UserProps {
     id: number;
@@ -20,6 +24,9 @@ export interface UserCreationProps extends Optional<UserProps, "id">{}
 export interface UserInstance extends Model<UserProps, UserCreationProps>, UserProps {
     getSessions: HasManyGetAssociationsMixin<SessionInstance>;
     addSessions: HasManyAddAssociationsMixin<SessionInstance, "id">;
+    
+    getRole: BelongsToGetAssociationMixin<RoleInstance>;
+    setRole: BelongsToSetAssociationMixin<RoleInstance, "id">
 }
 
 export default function(sequelize: Sequelize): ModelCtor<UserInstance> {

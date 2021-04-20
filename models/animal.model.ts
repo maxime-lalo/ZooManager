@@ -3,19 +3,21 @@ import {
     Optional,
     Model,
     DataTypes,
-    ModelCtor
+    ModelCtor, HasManyGetAssociationsMixin, BelongsToSetAssociationMixin, BelongsToGetAssociationMixin
 } from "sequelize";
+import {SpaceInstance} from "./space.model";
+import {SessionInstance} from "./session.model";
 
 export interface AnimalProps {
     id: number;
     species: string;
-    // id_space: number;
 }
 
 export interface AnimalCreationProps extends Optional<AnimalProps, "id">{}
 
 export interface AnimalInstance extends Model<AnimalProps, AnimalCreationProps>, AnimalProps {
-
+    getSpace: BelongsToGetAssociationMixin<SpaceInstance>;
+    setSpace: BelongsToSetAssociationMixin<SpaceInstance, "id">
 }
 
 export default function(sequelize: Sequelize): ModelCtor<AnimalInstance> {
@@ -28,11 +30,6 @@ export default function(sequelize: Sequelize): ModelCtor<AnimalInstance> {
         species: {
             type: DataTypes.STRING,
         },
-        /*id_space: {
-            type: DataTypes.BIGINT,
-            primaryKey: true,
-            autoIncrement: true
-        },*/
     }, {
         freezeTableName: true,
         underscored: true,

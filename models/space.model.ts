@@ -3,8 +3,11 @@ import {
     Optional,
     Model,
     DataTypes,
-    ModelCtor
+    ModelCtor,
+    HasManyGetAssociationsMixin,
+    HasManyAddAssociationsMixin
 } from "sequelize";
+import {AnimalInstance} from "./animal.model";
 
 export interface SpaceProps {
     id: number;
@@ -21,7 +24,8 @@ export interface SpaceProps {
 export interface SpaceCreationProps extends Optional<SpaceProps, "id">{}
 
 export interface SpaceInstance extends Model<SpaceProps, SpaceCreationProps>, SpaceProps {
-
+    getAnimals: HasManyGetAssociationsMixin<AnimalInstance>;
+    addAnimal: HasManyAddAssociationsMixin<AnimalInstance, "id">;
 }
 
 export default function(sequelize: Sequelize): ModelCtor<SpaceInstance> {
