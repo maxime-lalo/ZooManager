@@ -5,12 +5,11 @@ import {
     DataTypes,
     ModelCtor, BelongsToSetAssociationMixin, BelongsToGetAssociationMixin
 } from "sequelize";
-// import {PassInstance} from "./pass.model";
+import {PassInstance} from "./pass.model";
+import {UserInstance} from "./user.model";
 
 export interface UserPassProps {
     id: number;
-    /*id_pass: number;
-    id_user: number;*/
     is_active: boolean;
     acquisition_date: Date;
 }
@@ -18,8 +17,11 @@ export interface UserPassProps {
 export interface UserPassCreationProps extends Optional<UserPassProps, "id">{}
 
 export interface UserPassInstance extends Model<UserPassProps, UserPassCreationProps>, UserPassProps {
-    /*setPass: BelongsToSetAssociationMixin<PassInstance, "id">;
-    getPass: BelongsToGetAssociationMixin<PassInstance>;*/
+    setPass: BelongsToSetAssociationMixin<PassInstance, "id">;
+    getPass: BelongsToGetAssociationMixin<PassInstance>;
+
+    setUser: BelongsToSetAssociationMixin<UserInstance, "id">;
+    getUser: BelongsToGetAssociationMixin<UserInstance>
 }
 
 export default function(sequelize: Sequelize): ModelCtor<UserPassInstance> {
@@ -29,14 +31,6 @@ export default function(sequelize: Sequelize): ModelCtor<UserPassInstance> {
             primaryKey: true,
             autoIncrement: true
         },
-        /*id_pass: {
-            type: DataTypes.BIGINT,
-            foreignKey:
-        },
-        id_user: {
-            type: DataTypes.BIGINT,
-            primaryKey: true
-        },*/
         is_active: {
             type: DataTypes.BOOLEAN,
         },

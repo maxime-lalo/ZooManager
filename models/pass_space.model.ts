@@ -3,20 +3,24 @@ import {
     Optional,
     Model,
     DataTypes,
-    ModelCtor
+    ModelCtor, BelongsToSetAssociationMixin, BelongsToGetAssociationMixin
 } from "sequelize";
+import {SpaceInstance} from "./space.model";
+import {PassInstance} from "./pass.model";
 
 export interface PassSpaceProps {
     id: number;
-    /*id_pass: number;
-    id_space: number;*/
     order: number;
 }
 
 export interface PassSpaceCreationProps extends Optional<PassSpaceProps, "id">{}
 
 export interface PassSpaceInstance extends Model<PassSpaceProps, PassSpaceCreationProps>, PassSpaceProps {
+    setSpace: BelongsToSetAssociationMixin<SpaceInstance, "id">;
+    getSpace: BelongsToGetAssociationMixin<SpaceInstance>;
 
+    setPass: BelongsToSetAssociationMixin<PassInstance, "id">;
+    getPass: BelongsToGetAssociationMixin<PassInstance>;
 }
 
 export default function(sequelize: Sequelize): ModelCtor<PassSpaceInstance> {
@@ -26,16 +30,6 @@ export default function(sequelize: Sequelize): ModelCtor<PassSpaceInstance> {
             primaryKey: true,
             autoIncrement: true
         },
-        /*id_pass: {
-            type: DataTypes.BIGINT,
-            primaryKey: true,
-            autoIncrement: true
-        },
-        id_space: {
-            type: DataTypes.BIGINT,
-            primaryKey: true,
-            autoIncrement: true
-        },*/
         order: {
             type: DataTypes.DOUBLE,
         },

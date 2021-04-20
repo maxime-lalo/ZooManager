@@ -3,19 +3,20 @@ import {
     Optional,
     Model,
     DataTypes,
-    ModelCtor
+    ModelCtor, BelongsToSetAssociationMixin, BelongsToGetAssociationMixin
 } from "sequelize";
+import {SpaceInstance} from "./space.model";
 
 export interface SpaceImageProps {
     id: number;
-    // id_space: number;
     image: string;
 }
 
 export interface SpaceImageCreationProps extends Optional<SpaceImageProps, "id">{}
 
 export interface SpaceImageInstance extends Model<SpaceImageProps, SpaceImageCreationProps>, SpaceImageProps {
-
+    setSpace: BelongsToSetAssociationMixin<SpaceInstance, "id">;
+    getSpace: BelongsToGetAssociationMixin<SpaceInstance>;
 }
 
 export default function(sequelize: Sequelize): ModelCtor<SpaceImageInstance> {
@@ -25,11 +26,6 @@ export default function(sequelize: Sequelize): ModelCtor<SpaceImageInstance> {
             primaryKey: true,
             autoIncrement: true
         },
-        /*id_space: {
-            type: DataTypes.BIGINT,
-            primaryKey: true,
-            autoIncrement: true
-        },*/
         image: {
             type: DataTypes.STRING,
         },

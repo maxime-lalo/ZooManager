@@ -7,10 +7,14 @@ import {
     HasManyGetAssociationsMixin,
     HasManyAddAssociationsMixin,
     BelongsToSetAssociationMixin,
-    BelongsToGetAssociationMixin
+    BelongsToGetAssociationMixin,
+    HasManyRemoveAssociationMixin,
+    HasManySetAssociationsMixin
 } from "sequelize";
 import {SessionInstance} from "./session.model";
 import {RoleInstance} from "./role.model";
+import {UserPassInstance} from "./user_pass.model";
+import {SpaceLogsInstance} from "./space_logs.model";
 
 export interface UserProps {
     id: number;
@@ -27,6 +31,16 @@ export interface UserInstance extends Model<UserProps, UserCreationProps>, UserP
     
     getRole: BelongsToGetAssociationMixin<RoleInstance>;
     setRole: BelongsToSetAssociationMixin<RoleInstance, "id">
+
+    getUserPass: HasManyGetAssociationsMixin<UserPassInstance>;
+    addUserPass: HasManyAddAssociationsMixin<UserPassInstance, "id">;
+    removeUserPass: HasManyRemoveAssociationMixin<UserPassInstance, "id">;
+    updateUserPass: HasManySetAssociationsMixin<UserPassInstance, "id">;
+
+    getSpaceLogs: HasManyGetAssociationsMixin<SpaceLogsInstance>;
+    addSpaceLogs: HasManyAddAssociationsMixin<SpaceLogsInstance, "id">;
+    removeSpaceLogs: HasManyRemoveAssociationMixin<SpaceLogsInstance, "id">;
+    updateSpaceLogs: HasManySetAssociationsMixin<SpaceLogsInstance, "id">;
 }
 
 export default function(sequelize: Sequelize): ModelCtor<UserInstance> {

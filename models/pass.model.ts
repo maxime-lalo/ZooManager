@@ -3,8 +3,14 @@ import {
     Optional,
     Model,
     DataTypes,
-    ModelCtor
+    ModelCtor,
+    HasManyGetAssociationsMixin,
+    HasManyAddAssociationsMixin,
+    HasManyRemoveAssociationMixin,
+    HasManySetAssociationsMixin
 } from "sequelize";
+import {PassSpaceInstance} from "./pass_space.model";
+import {UserPassInstance} from "./user_pass.model";
 
 export interface PassProps {
     id: number;
@@ -14,7 +20,15 @@ export interface PassProps {
 export interface PassCreationProps extends Optional<PassProps, "id">{}
 
 export interface PassInstance extends Model<PassProps, PassCreationProps>, PassProps {
+    getPassSpaces: HasManyGetAssociationsMixin<PassSpaceInstance>;
+    addPassSpace: HasManyAddAssociationsMixin<PassSpaceInstance, "id">;
+    removePassSpace: HasManyRemoveAssociationMixin<PassSpaceInstance, "id">;
+    updatePassSpace: HasManySetAssociationsMixin<PassSpaceInstance, "id">;
 
+    getUserPass: HasManyGetAssociationsMixin<UserPassInstance>;
+    addUserPass: HasManyAddAssociationsMixin<UserPassInstance, "id">;
+    removeUserPass: HasManyRemoveAssociationMixin<UserPassInstance, "id">;
+    updateUserPass: HasManySetAssociationsMixin<UserPassInstance, "id">;
 }
 
 export default function(sequelize: Sequelize): ModelCtor<PassInstance> {

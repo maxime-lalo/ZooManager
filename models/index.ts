@@ -97,6 +97,36 @@ export class SequelizeManager {
         props.Animal.belongsTo(props.Space); // Animal 1 Space
 
         props.Role.hasOne(props.User); // Un user a un rôle
+
+        props.Animal.hasMany(props.Animal_HealthBook); // Animal N Health Book
+        props.Animal_HealthBook.belongsTo(props.Animal); // Healthbook Many Animals
+
+        props.Space.hasMany(props.Space_Image);
+        props.Space_Image.belongsTo(props.Space);
+
+        props.Space.hasMany(props.Opening_Time);
+        props.Opening_Time.belongsTo(props.Space);
+
+        props.Space.hasMany(props.Maintenance_Space);
+        props.Maintenance_Space.belongsTo(props.Space);
+
+        props.Space.hasMany(props.Pass_Space);
+        props.Pass_Space.belongsTo(props.Space);
+
+        props.Pass.hasMany(props.Pass_Space);
+        props.Pass_Space.belongsTo(props.Pass);
+
+        props.Pass.hasMany(props.User_Pass);
+        props.User_Pass.belongsTo(props.Pass);
+
+        props.User.hasMany(props.User_Pass);
+        props.User_Pass.belongsTo(props.User);
+
+        props.Space.hasMany(props.Space_Logs);
+        props.Space_Logs.belongsTo(props.Space);
+
+        props.User.hasMany(props.Space_Logs);
+        props.Space_Logs.belongsTo(props.User);
     }
 
     private constructor(props: SequelizeManagerProps) {

@@ -3,13 +3,13 @@ import {
     Optional,
     Model,
     DataTypes,
-    ModelCtor
+    ModelCtor, BelongsToSetAssociationMixin, BelongsToGetAssociationMixin
 } from "sequelize";
+import {SpaceInstance} from "./space.model";
+import {UserInstance} from "./user.model";
 
 export interface SpaceLogsProps {
     id: number;
-    /*id_user: number;
-    id_space: number;*/
     in_out: boolean;
     timestamp: Date;
 }
@@ -17,7 +17,11 @@ export interface SpaceLogsProps {
 export interface SpaceLogsCreationProps extends Optional<SpaceLogsProps, "id">{}
 
 export interface SpaceLogsInstance extends Model<SpaceLogsProps, SpaceLogsCreationProps>, SpaceLogsProps {
+    setSpace: BelongsToSetAssociationMixin<SpaceInstance, "id">;
+    getSpace: BelongsToGetAssociationMixin<SpaceInstance>;
 
+    setUser: BelongsToSetAssociationMixin<UserInstance, "id">;
+    getUser: BelongsToGetAssociationMixin<UserInstance>;
 }
 
 export default function(sequelize: Sequelize): ModelCtor<SpaceLogsInstance> {
@@ -27,16 +31,6 @@ export default function(sequelize: Sequelize): ModelCtor<SpaceLogsInstance> {
             primaryKey: true,
             autoIncrement: true
         },
-        /*id_pass: {
-            type: DataTypes.BIGINT,
-            primaryKey: true,
-            autoIncrement: true
-        },
-        id_space: {
-            type: DataTypes.BIGINT,
-            primaryKey: true,
-            autoIncrement: true
-        },*/
         in_out: {
             type: DataTypes.BOOLEAN,
         },

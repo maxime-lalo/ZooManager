@@ -3,12 +3,12 @@ import {
     Optional,
     Model,
     DataTypes,
-    ModelCtor
+    ModelCtor, BelongsToSetAssociationMixin, BelongsToGetAssociationMixin
 } from "sequelize";
+import {SpaceInstance} from "./space.model";
 
 export interface OpeningTimeProps {
     id: number;
-    // id_space: number;
     opening_time: Date;
     closing_time: Date;
     day: Date;
@@ -17,7 +17,8 @@ export interface OpeningTimeProps {
 export interface OpeningTimeCreationProps extends Optional<OpeningTimeProps, "id">{}
 
 export interface OpeningTimeInstance extends Model<OpeningTimeProps, OpeningTimeCreationProps>, OpeningTimeProps {
-
+    setSpace: BelongsToSetAssociationMixin<SpaceInstance, "id">;
+    getSpace: BelongsToGetAssociationMixin<SpaceInstance>;
 }
 
 export default function(sequelize: Sequelize): ModelCtor<OpeningTimeInstance> {
@@ -27,11 +28,6 @@ export default function(sequelize: Sequelize): ModelCtor<OpeningTimeInstance> {
             primaryKey: true,
             autoIncrement: true
         },
-        /*id_space: {
-            type: DataTypes.BIGINT,
-            primaryKey: true,
-            autoIncrement: true
-        },*/
         opening_time: {
             type: DataTypes.DATE,
         },

@@ -3,20 +3,21 @@ import {
     Optional,
     Model,
     DataTypes,
-    ModelCtor
+    ModelCtor,
+    BelongsToGetAssociationMixin
 } from "sequelize";
+import {AnimalInstance} from "./animal.model";
 
 export interface AnimalHealthBookProps {
     id: number;
     timestamp: Date;
-    // id_animal: number;
     commentary: string;
 }
 
 export interface AnimalHealthBookCreationProps extends Optional<AnimalHealthBookProps, "id">{}
 
 export interface AnimalHealthBookInstance extends Model<AnimalHealthBookProps, AnimalHealthBookCreationProps>, AnimalHealthBookProps {
-
+    getAnimal: BelongsToGetAssociationMixin<AnimalInstance>;
 }
 
 export default function(sequelize: Sequelize): ModelCtor<AnimalHealthBookInstance> {
@@ -29,11 +30,6 @@ export default function(sequelize: Sequelize): ModelCtor<AnimalHealthBookInstanc
         timestamp: {
             type: DataTypes.DATE,
         },
-        /*id_animal: {
-            type: DataTypes.BIGINT,
-            primaryKey: true,
-            autoIncrement: true
-        },*/
         commentary: {
             type: DataTypes.STRING,
         },

@@ -3,20 +3,21 @@ import {
     Optional,
     Model,
     DataTypes,
-    ModelCtor
+    ModelCtor, BelongsToSetAssociationMixin, BelongsToGetAssociationMixin
 } from "sequelize";
+import {SpaceInstance} from "./space.model";
 
 export interface MaintenanceSpaceProps {
     id: number;
     timestamp: Date;
     state: boolean;
-    // id_space: number;
 }
 
 export interface MaintenanceSpaceCreationProps extends Optional<MaintenanceSpaceProps, "id">{}
 
 export interface MaintenanceSpaceInstance extends Model<MaintenanceSpaceProps, MaintenanceSpaceCreationProps>, MaintenanceSpaceProps {
-
+    setSpace: BelongsToSetAssociationMixin<SpaceInstance, "id">;
+    getSpace: BelongsToGetAssociationMixin<SpaceInstance>;
 }
 
 export default function(sequelize: Sequelize): ModelCtor<MaintenanceSpaceInstance> {
@@ -32,11 +33,6 @@ export default function(sequelize: Sequelize): ModelCtor<MaintenanceSpaceInstanc
         state: {
             type: DataTypes.BOOLEAN,
         },
-        /*id_space: {
-            type: DataTypes.BIGINT,
-            primaryKey: true,
-            autoIncrement: true
-        },*/
     }, {
         freezeTableName: true,
         underscored: true,
