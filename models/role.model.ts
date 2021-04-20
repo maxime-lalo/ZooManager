@@ -3,8 +3,9 @@ import {
     Optional,
     Model,
     DataTypes,
-    ModelCtor
+    ModelCtor, HasManyGetAssociationsMixin
 } from "sequelize";
+import {UserInstance} from "./user.model";
 
 export interface RoleProps {
     id: number;
@@ -14,7 +15,7 @@ export interface RoleProps {
 export interface RoleCreationProps extends Optional<RoleProps, "id">{}
 
 export interface RoleInstance extends Model<RoleProps, RoleCreationProps>, RoleProps {
-
+    getUsers: HasManyGetAssociationsMixin<UserInstance>;
 }
 
 export default function(sequelize: Sequelize): ModelCtor<RoleInstance> {
