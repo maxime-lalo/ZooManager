@@ -21,6 +21,7 @@ export interface UserProps {
     login: string;
     password: string;
     email: string;
+    in_zoo: boolean;
 }
 
 export interface UserCreationProps extends Optional<UserProps, "id">{}
@@ -59,6 +60,9 @@ export default function(sequelize: Sequelize): ModelCtor<UserInstance> {
         },
         email: {
             type: DataTypes.STRING
+        },
+        in_zoo: {
+            type: DataTypes.BOOLEAN
         }
     }, {
         freezeTableName: true,
