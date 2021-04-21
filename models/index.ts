@@ -84,7 +84,7 @@ export class SequelizeManager {
         }
         SequelizeManager.associate(managerProps);
         await sequelize.sync({
-            force: true // reinitialise la bdd COMPLETEMENT
+            //force: true // reinitialise la bdd COMPLETEMENT
         });
         return new SequelizeManager(managerProps);
     }
