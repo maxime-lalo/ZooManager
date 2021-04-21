@@ -63,6 +63,7 @@ export class SequelizeManager {
             database: process.env.DB_NAME,
             username: process.env.DB_USER,
             password: process.env.DB_PASSWORD,
+            timezone: process.env.DB_TIMEZONE,
             port: Number.parseInt(process.env.DB_PORT as string)
         });
         await sequelize.authenticate();
