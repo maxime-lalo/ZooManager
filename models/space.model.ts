@@ -80,10 +80,10 @@ export default function(sequelize: Sequelize): ModelCtor<SpaceInstance> {
             type: DataTypes.DOUBLE,
         },
         duration: {
-            type: DataTypes.DATE,
+            type: DataTypes.TIME,
         },
         opening_time: {
-            type: DataTypes.DATE,
+            type: DataTypes.TIME,
         },
         handicap_access: {
             type: DataTypes.BOOLEAN,
