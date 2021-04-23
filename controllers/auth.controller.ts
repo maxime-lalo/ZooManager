@@ -1,6 +1,7 @@
 import {ModelCtor} from "sequelize";
 import {UserCreationProps, UserInstance} from "../models/user.model";
 import {SessionInstance} from "../models/session.model";
+import {RoleCreationProps, RoleInstance} from "../models/role.model";
 import {SequelizeManager} from "../models";
 import {compare, hash} from "bcrypt";
 
@@ -8,28 +9,45 @@ export class AuthController {
 
     User: ModelCtor<UserInstance>;
     Session: ModelCtor<SessionInstance>;
+    Role: ModelCtor<RoleInstance>;
 
     private static instance: AuthController;
 
     public static async getInstance(): Promise<AuthController> {
         if (AuthController.instance === undefined) {
-            const {User, Session} = await SequelizeManager.getInstance();
-            AuthController.instance = new AuthController(User, Session);
+            const {User, Session, Role} = await SequelizeManager.getInstance();
+            AuthController.instance = new AuthController(User, Session, Role);
         }
         return AuthController.instance;
 
     }
-    private constructor(User: ModelCtor<UserInstance>, Session: ModelCtor<SessionInstance>) {
+    private constructor(User: ModelCtor<UserInstance>, Session: ModelCtor<SessionInstance>, Role: ModelCtor<RoleInstance>) {
         this.User = User;
         this.Session = Session;
+        this.Role = Role;
     }
 
-    public async subscribe(props: UserCreationProps): Promise<UserInstance | null> {
+    public async subscribe(props: UserCreationProps, name_role: string): Promise<UserInstance | null> {
+        const role = await this.Role.findOne({
+            where: {
+                name_role
+            }
+        });
+
+        if (role === null) {
+            return null;
+        }
+        if (name_role !== role.name_role){
+            return null;
+        }
+
         const passwordHashed = await hash(props.password, 5);
-        return this.User.create({
+        const user = await this.User.create({
             ...props,
             password: passwordHashed
         });
+        await user.setRole(role);
+        return user;
     }
 
     public async log(login: string, password: string): Promise<SessionInstance | null> {

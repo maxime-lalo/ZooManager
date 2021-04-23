@@ -9,6 +9,8 @@ authRouter.post("/subscribe", async function (req, res) {
     const login = req.body.login;
     const password = req.body.password;
     const email = req.body.email;
+    const in_zoo = false;
+    const name_role = req.body.name_role;
     if (login === undefined || password === undefined || email === undefined) {
         res.status(400).end();
         return;
@@ -17,8 +19,9 @@ authRouter.post("/subscribe", async function (req, res) {
     const user = await authController.subscribe({
         login,
         password,
-        email
-    });
+        email,
+        in_zoo
+    }, name_role);
     if (user !== null){
         res.status(201);
         res.json(user);

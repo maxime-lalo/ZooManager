@@ -3,19 +3,22 @@ import {
     Optional,
     Model,
     DataTypes,
-    ModelCtor, HasManyGetAssociationsMixin
+    ModelCtor,
+    HasManyGetAssociationsMixin,
+    HasManyAddAssociationsMixin
 } from "sequelize";
 import {UserInstance} from "./user.model";
 
 export interface RoleProps {
     id: number;
-    role: string;
+    name_role: string;
 }
 
 export interface RoleCreationProps extends Optional<RoleProps, "id">{}
 
 export interface RoleInstance extends Model<RoleProps, RoleCreationProps>, RoleProps {
     getUsers: HasManyGetAssociationsMixin<UserInstance>;
+    addUsers: HasManyAddAssociationsMixin<UserInstance, "id">;
 }
 
 export default function(sequelize: Sequelize): ModelCtor<RoleInstance> {
@@ -25,7 +28,7 @@ export default function(sequelize: Sequelize): ModelCtor<RoleInstance> {
             primaryKey: true,
             autoIncrement: true
         },
-        role: {
+        name_role: {
             type: DataTypes.STRING,
         },
     }, {

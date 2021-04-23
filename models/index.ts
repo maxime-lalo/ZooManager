@@ -63,6 +63,7 @@ export class SequelizeManager {
             database: process.env.DB_NAME,
             username: process.env.DB_USER,
             password: process.env.DB_PASSWORD,
+            timezone: process.env.DB_TIMEZONE,
             port: Number.parseInt(process.env.DB_PORT as string)
         });
         await sequelize.authenticate();
@@ -84,7 +85,7 @@ export class SequelizeManager {
         }
         SequelizeManager.associate(managerProps);
         await sequelize.sync({
-            force: true // reinitialise la bdd COMPLETEMENT
+            //force: true // reinitialise la bdd COMPLETEMENT
         });
         return new SequelizeManager(managerProps);
     }
@@ -96,7 +97,9 @@ export class SequelizeManager {
         props.Space.hasMany(props.Animal); // Space N Animal
         props.Animal.belongsTo(props.Space); // Animal 1 Space
 
-        props.Role.hasOne(props.User); // Un user a un rôle
+        // props.Role.hasOne(props.User); // Un user a un rôle
+        props.User.belongsTo(props.Role); // User 1 Role
+        // props.Role.hasMany(props.User); // Role N User
 
         props.Animal.hasMany(props.Animal_HealthBook); // Animal N Health Book
         props.Animal_HealthBook.belongsTo(props.Animal); // Healthbook Many Animals
