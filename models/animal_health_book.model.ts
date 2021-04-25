@@ -4,7 +4,7 @@ import {
     Model,
     DataTypes,
     ModelCtor,
-    BelongsToGetAssociationMixin
+    BelongsToGetAssociationMixin, BelongsToSetAssociationMixin
 } from "sequelize";
 import {AnimalInstance} from "./animal.model";
 
@@ -18,6 +18,7 @@ export interface AnimalHealthBookCreationProps extends Optional<AnimalHealthBook
 
 export interface AnimalHealthBookInstance extends Model<AnimalHealthBookProps, AnimalHealthBookCreationProps>, AnimalHealthBookProps {
     getAnimal: BelongsToGetAssociationMixin<AnimalInstance>;
+    setAnimal: BelongsToSetAssociationMixin<AnimalInstance, "id">
 }
 
 export default function(sequelize: Sequelize): ModelCtor<AnimalHealthBookInstance> {
