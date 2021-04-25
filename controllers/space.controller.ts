@@ -1,9 +1,6 @@
 import {ModelCtor} from "sequelize";
 import {SpaceCreationProps, SpaceInstance} from "../models/space.model";
 import {SequelizeManager} from "../models";
-import {RoleCreationProps, RoleInstance} from "../models/role.model";
-import {hash} from "bcrypt";
-import {SpaceLogsInstance} from "../models/space_logs.model";
 export class SpaceController {
 
     Space: ModelCtor<SpaceInstance>;
@@ -40,7 +37,7 @@ export class SpaceController {
         });
     }
 
-    public async modify(id: number,name: string, description: string, type: string, capacity: number, duration: Date, handicap_access: boolean): Promise<SpaceInstance | null> {
+    public async modify(id: number,name_space: string, description: string, type: string, capacity: number, duration: Date, handicap_access: boolean): Promise<SpaceInstance | null> {
         const space = await this.Space.findOne({
             where: {
                 id
@@ -52,7 +49,7 @@ export class SpaceController {
         if (id !== space.id){
             return null;
         }
-        name !== undefined || null ? space.name = name : space.name;
+        name_space !== undefined || null ? space.name_space = name_space : space.name_space;
         description !== undefined || null ? space.description = description : space.description;
         type !== undefined || null ? space.type = type : space.type;
         capacity !== undefined || null ? space.capacity = capacity : space.capacity;
