@@ -40,7 +40,7 @@ export class SpaceController {
         });
     }
 
-    public async modify(id: number,name: string, description: string, type: string, capacity: number, duration: Date, opening_time: Date, handicap_access: boolean, is_active: boolean): Promise<SpaceInstance | null> {
+    public async modify(id: number,name: string, description: string, type: string, capacity: number, duration: Date, handicap_access: boolean): Promise<SpaceInstance | null> {
         const space = await this.Space.findOne({
             where: {
                 id
@@ -57,25 +57,23 @@ export class SpaceController {
         type !== undefined || null ? space.type = type : space.type;
         capacity !== undefined || null ? space.capacity = capacity : space.capacity;
         duration !== undefined || null ? space.duration = duration : space.duration;
-        opening_time !== undefined || null ? space.opening_time = opening_time : space.opening_time;
         handicap_access !== undefined || null ? space.handicap_access = handicap_access : space.handicap_access;
-        is_active !== undefined || null ? space.is_active = is_active : space.is_active;
         return await space.save();
     }
 
     public async delete(id: number): Promise<void | null> {
-        const role = await this.Space.findOne({
+        const space = await this.Space.findOne({
             where: {
                 id
             }
         });
-        if (role === null) {
+        if (space === null) {
             return null;
         }
-        if (id !== role.id){
+        if (id !== space.id){
             return null;
         }
-        return await role.destroy();
+        return await space.destroy();
     }
 
 }

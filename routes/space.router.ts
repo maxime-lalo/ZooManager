@@ -50,10 +50,8 @@ spaceRouter.post("/add", async function (req, res) {
     const type = req.body.type;
     const capacity = req.body.capacity;
     const duration = req.body.duration;
-    const opening_time = req.body.opening_time;
     const handicap_access = req.body.handicap_access;
-    const is_active = false;
-    if (name === undefined || description === undefined || type === undefined || capacity === undefined || duration === undefined || opening_time === undefined || handicap_access === undefined) {
+    if (name === undefined || description === undefined || type === undefined || capacity === undefined || duration === undefined || handicap_access === undefined) {
         res.status(400).end();
         return;
     }
@@ -64,9 +62,7 @@ spaceRouter.post("/add", async function (req, res) {
         type,
         capacity,
         duration,
-        opening_time,
-        handicap_access,
-        is_active
+        handicap_access
     });
     if (space !== null){
         res.status(201);
@@ -82,9 +78,7 @@ spaceRouter.post("/update", async function (req, res) {
     const type = checkString(req.body.type);
     const capacity = checkNumber(req.body.capacity);
     const duration = checkDate(req.body.duration);
-    const opening_time = checkDate(req.body.opening_time);
     const handicap_access = checkBool(req.body.handicap_access);
-    const is_active = checkBool(req.body.is_active);
     const id = req.body.id;
 
     /*if (req.body.name) {
@@ -117,9 +111,7 @@ spaceRouter.post("/update", async function (req, res) {
     type !== undefined || null ? req.body.type = type : req.body.type;
     capacity !== undefined || null ? req.body.capacity = capacity : req.body.capacity;
     duration !== undefined || null ? req.body.duration = duration : req.body.duration;
-    opening_time !== undefined || null ? req.body.opening_time = opening_time : req.body.opening_time;
     handicap_access !== undefined || null ? req.body.handicap_access = handicap_access : req.body.handicap_access;
-    is_active !== undefined || null ? req.body.is_active = is_active : req.body.is_active;
 
     /*if (name === undefined || description === undefined || type === undefined || capacity === undefined || duration === undefined || opening_time === undefined || handicap_access === undefined || is_active === undefined || id) {
         res.status(400).end();
@@ -127,7 +119,7 @@ spaceRouter.post("/update", async function (req, res) {
     }*/
     const spaceController = await SpaceController.getInstance();
     // @ts-ignore
-    const space = await spaceController.modify(id, name, description, type, capacity, duration, opening_time, handicap_access, is_active);
+    const space = await spaceController.modify(id, name, description, type, capacity, duration, handicap_access);
     if (space === null){
         res.status(404).end();
         return;
