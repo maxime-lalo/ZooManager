@@ -28,8 +28,20 @@ function checkBool(value: boolean | null | undefined){
 
 spaceRouter.get("/get",async function(req,res){
     const spaceController = await SpaceController.getInstance();
+    res.json(await spaceController.getAll());
     res.status(200);
-    res.json(await spaceController.getSpace(1));
+})
+
+spaceRouter.get("/get/:id",async function(req,res){
+    const spaceController = await SpaceController.getInstance();
+    const space = await spaceController.getSpace(parseInt(req.params.id));
+    if (space){
+        res.json(space);
+        res.status(200);
+    }else{
+        res.status(404);
+        res.end();
+    }
 })
 
 spaceRouter.post("/add", async function (req, res) {

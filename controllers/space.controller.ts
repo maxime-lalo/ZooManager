@@ -3,6 +3,7 @@ import {SpaceCreationProps, SpaceInstance} from "../models/space.model";
 import {SequelizeManager} from "../models";
 import {RoleCreationProps, RoleInstance} from "../models/role.model";
 import {hash} from "bcrypt";
+import {SpaceLogsInstance} from "../models/space_logs.model";
 export class SpaceController {
 
     Space: ModelCtor<SpaceInstance>;
@@ -19,6 +20,10 @@ export class SpaceController {
     }
     private constructor(Space: ModelCtor<SpaceInstance>) {
         this.Space = Space;
+    }
+
+    public async getAll(): Promise<Array<SpaceInstance> | null>{
+        return await this.Space.findAll();
     }
 
     public async getSpace(id: number): Promise<SpaceInstance | null> {
