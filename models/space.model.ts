@@ -23,9 +23,7 @@ export interface SpaceProps {
     type: string;
     capacity: number;
     duration: Date;
-    opening_time: Date;
     handicap_access: boolean;
-    is_active: boolean;
 }
 
 export interface SpaceCreationProps extends Optional<SpaceProps, "id">{}
@@ -82,13 +80,7 @@ export default function(sequelize: Sequelize): ModelCtor<SpaceInstance> {
         duration: {
             type: DataTypes.TIME,
         },
-        opening_time: {
-            type: DataTypes.TIME,
-        },
         handicap_access: {
-            type: DataTypes.BOOLEAN,
-        },
-        is_active: {
             type: DataTypes.BOOLEAN,
         },
     }, {
