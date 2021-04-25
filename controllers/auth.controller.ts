@@ -80,4 +80,23 @@ export class AuthController {
         });
     }
 
+    public async getRole(token: string): Promise<RoleInstance | null> {
+        const session = await this.Session.findOne({
+            where: {
+                token
+            }
+        });
+        if(session !== null){
+            const user = await session.getUser();
+
+            if (user !== null){
+                return await user.getRole();
+            }else{
+                return null;
+            }
+        }else{
+            return null;
+        }
+    }
+
 }
