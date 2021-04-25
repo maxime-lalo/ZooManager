@@ -1,7 +1,7 @@
 import {ModelCtor} from "sequelize";
 import {UserCreationProps, UserInstance} from "../models/user.model";
 import {SessionInstance} from "../models/session.model";
-import {RoleCreationProps, RoleInstance} from "../models/role.model";
+import {RoleInstance} from "../models/role.model";
 import {SequelizeManager} from "../models";
 import {compare, hash} from "bcrypt";
 

@@ -45,19 +45,19 @@ spaceRouter.get("/get/:id",async function(req,res){
 })
 
 spaceRouter.post("/add", async function (req, res) {
-    const name = req.body.name;
+    const name_space = req.body.name_space;
     const description = req.body.description;
     const type = req.body.type;
     const capacity = req.body.capacity;
     const duration = req.body.duration;
     const handicap_access = req.body.handicap_access;
-    if (name === undefined || description === undefined || type === undefined || capacity === undefined || duration === undefined || handicap_access === undefined) {
+    if (name_space === undefined || description === undefined || type === undefined || capacity === undefined || duration === undefined || handicap_access === undefined) {
         res.status(400).end();
         return;
     }
     const spaceController = await SpaceController.getInstance();
     const space = await spaceController.add({
-        name,
+        name_space,
         description,
         type,
         capacity,
@@ -73,7 +73,7 @@ spaceRouter.post("/add", async function (req, res) {
 });
 
 spaceRouter.post("/update", async function (req, res) {
-    const name = checkString(req.body.name);
+    const name_space = checkString(req.body.name_space);
     const description = checkString(req.body.description);
     const type = checkString(req.body.type);
     const capacity = checkNumber(req.body.capacity);
@@ -81,8 +81,8 @@ spaceRouter.post("/update", async function (req, res) {
     const handicap_access = checkBool(req.body.handicap_access);
     const id = req.body.id;
 
-    /*if (req.body.name) {
-        const name = req.body.name;
+    /*if (req.body.name_space_space) {
+        const name_space = req.body.name_space;
     }
     if (req.body.description) {
         const description = req.body.description;
@@ -106,20 +106,20 @@ spaceRouter.post("/update", async function (req, res) {
         const is_active = req.body.is_active;
     }*/
 
-    name !== undefined || null ? req.body.name = name : req.body.name;
+    name_space !== undefined || null ? req.body.name_space = name_space : req.body.name_space;
     description !== undefined || null ? req.body.description = description : req.body.description;
     type !== undefined || null ? req.body.type = type : req.body.type;
     capacity !== undefined || null ? req.body.capacity = capacity : req.body.capacity;
     duration !== undefined || null ? req.body.duration = duration : req.body.duration;
     handicap_access !== undefined || null ? req.body.handicap_access = handicap_access : req.body.handicap_access;
 
-    /*if (name === undefined || description === undefined || type === undefined || capacity === undefined || duration === undefined || opening_time === undefined || handicap_access === undefined || is_active === undefined || id) {
+    /*if (name_space === undefined || description === undefined || type === undefined || capacity === undefined || duration === undefined || opening_time === undefined || handicap_access === undefined || is_active === undefined || id) {
         res.status(400).end();
         return;
     }*/
     const spaceController = await SpaceController.getInstance();
     // @ts-ignore
-    const space = await spaceController.modify(id, name, description, type, capacity, duration, handicap_access);
+    const space = await spaceController.modify(id, name_space, description, type, capacity, duration, handicap_access);
     if (space === null){
         res.status(404).end();
         return;

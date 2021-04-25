@@ -18,7 +18,7 @@ import {SpaceLogsInstance} from "./space_logs.model";
 
 export interface SpaceProps {
     id: number;
-    name: string;
+    name_space: string;
     description: string;
     type: string;
     capacity: number;
@@ -65,7 +65,7 @@ export default function(sequelize: Sequelize): ModelCtor<SpaceInstance> {
             primaryKey: true,
             autoIncrement: true
         },
-        name: {
+        name_space: {
             type: DataTypes.STRING,
         },
         description: {
