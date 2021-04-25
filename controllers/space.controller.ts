@@ -40,7 +40,7 @@ export class SpaceController {
         });
     }
 
-    public async modify(id: number,name: string, description: string, type: string, capacity: number, duration: Date, handicap_access: boolean): Promise<SpaceInstance | null> {
+    public async modify(id: number,name_space: string, description: string, type: string, capacity: number, duration: Date, handicap_access: boolean): Promise<SpaceInstance | null> {
         const space = await this.Space.findOne({
             where: {
                 id
@@ -52,7 +52,7 @@ export class SpaceController {
         if (id !== space.id){
             return null;
         }
-        name !== undefined || null ? space.name = name : space.name;
+        name_space !== undefined || null ? space.name_space = name_space : space.name_space;
         description !== undefined || null ? space.description = description : space.description;
         type !== undefined || null ? space.type = type : space.type;
         capacity !== undefined || null ? space.capacity = capacity : space.capacity;

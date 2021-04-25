@@ -11,7 +11,7 @@ export interface OpeningTimeProps {
     id: number;
     opening_time: Date;
     closing_time: Date;
-    day: Date;
+    day: Number;
 }
 
 export interface OpeningTimeCreationProps extends Optional<OpeningTimeProps, "id">{}
@@ -29,13 +29,13 @@ export default function(sequelize: Sequelize): ModelCtor<OpeningTimeInstance> {
             autoIncrement: true
         },
         opening_time: {
-            type: DataTypes.DATE,
+            type: DataTypes.TIME,
         },
         closing_time: {
-            type: DataTypes.DATE,
+            type: DataTypes.TIME,
         },
         day: {
-            type: DataTypes.DATE,
+            type: DataTypes.BIGINT,
         },
     }, {
         freezeTableName: true,
