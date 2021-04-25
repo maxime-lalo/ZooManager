@@ -40,6 +40,18 @@ maintenanceSpaceRouter.post("/add", adminMiddleware, async function (req, res) {
     }
 });
 
+maintenanceSpaceRouter.post("/close", adminMiddleware, async function(req,res){
+    const space = req.body.space;
+    if(space === undefined){
+        res.status(400).end();
+        return;
+    }
+
+    const maintenanceController = await MaintenanceSpaceController.getInstance();
+    await maintenanceController.closeMaintenance(space);
+    res.status(204).end();
+})
+
 export {
     maintenanceSpaceRouter
 }
