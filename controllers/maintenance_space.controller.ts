@@ -72,4 +72,24 @@ export class MaintenanceSpaceController {
             }
         }
     }
+
+    public async closeMaintenance(idSpace: number): Promise<void>{
+        const spaces = await this.Maintenance_Space.findAll({
+            where: {
+                state: true
+            },
+            include: {
+                model: this.Space,
+                as: this.Space.tableName,
+                where: {
+                    '$Space.id$' : idSpace
+                }
+            }
+        });
+
+        for(let i = 0; i < spaces.length; i++){
+            spaces[i].state  = false;
+            await spaces[i].save();
+        }
+    }
 }
