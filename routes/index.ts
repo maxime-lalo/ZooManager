@@ -6,6 +6,7 @@ import {passRouter} from "./pass.router";
 import {zooRouter} from "./zoo.router";
 import {maintenanceSpaceRouter} from "./maintenance_space.router";
 import {openingTimeRouter} from "./opening_time.router";
+import {spaceImageRouter} from "./space_images.router";
 
 export function buildRoutes(app: Express) {
     app.use("/auth", authRouter);
@@ -15,4 +16,5 @@ export function buildRoutes(app: Express) {
     app.use("/zoo", zooRouter);
     app.use("/maintenance_space", maintenanceSpaceRouter);
     app.use("/openingTime", openingTimeRouter);
+    app.use("/spaceImage", spaceImageRouter);
 }
