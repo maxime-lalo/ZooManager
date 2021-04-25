@@ -3,6 +3,17 @@ import {OpeningTimeController} from "../controllers/opening_time.controller";
 
 const openingTimeRouter = express.Router();
 
+function checkNumber(value: number | null | undefined){
+    if (value !== undefined && value !== null) {
+        return value;
+    }
+}
+function checkDate(value: Date | null | undefined){
+    if (value !== undefined && value !== null) {
+        return value;
+    }
+}
+
 openingTimeRouter.post("/add", async function (req, res) {
     const opening_time = req.body.opening_time;
     const closing_time = req.body.closing_time;
@@ -28,13 +39,20 @@ openingTimeRouter.post("/add", async function (req, res) {
 
 openingTimeRouter.post("/update", async function (req, res) {
     const id = req.body.id;
-    const name_OpeningTime = req.body.name_OpeningTime;
-    if (id === undefined || name_OpeningTime === undefined) {
+    const opening_time = checkDate(req.body.opening_time);
+    const closing_time = checkDate(req.body.closing_time);
+    const day = checkNumber(req.body.day);
+
+    opening_time !== undefined || null ? req.body.opening_time = opening_time : req.body.opening_time;
+    closing_time !== undefined || null ? req.body.closing_time = closing_time : req.body.closing_time;
+    day !== undefined || null ? req.body.day = day : req.body.day;
+
+    if (id === undefined || opening_time === undefined || closing_time === undefined || day === undefined) {
         res.status(400).end();
         return;
     }
     const openingTimeController = await OpeningTimeController.getInstance();
-    const uOpeningTime = await openingTimeController.modify(id, name_OpeningTime);
+    const uOpeningTime = await openingTimeController.modify(id, opening_time, closing_time, day);
     if (uOpeningTime === null){
         res.status(404).end();
         return;

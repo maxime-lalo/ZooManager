@@ -44,35 +44,38 @@ export class OpeningTimeController {
         return opT;
     }
 
-    public async modify(id: number, opening_time: Date): Promise<OpeningTimeInstance | null> {
-        const OpeningTime = await this.OpeningTime.findOne({
+    public async modify(id: number, opening_time: Date, closing_time: Date, day: number): Promise<OpeningTimeInstance | null> {
+        const openingTime = await this.OpeningTime.findOne({
             where: {
                 id
             }
         });
-        if (OpeningTime === null) {
+        if (openingTime === null) {
             return null;
         }
-        if (id !== OpeningTime.id){
+        if (id !== openingTime.id){
             return null;
         }
-        OpeningTime.opening_time = opening_time;
-        return await OpeningTime.save();
+        opening_time !== undefined || null ? openingTime.opening_time = opening_time : openingTime.opening_time;
+        closing_time !== undefined || null ? openingTime.closing_time = closing_time : openingTime.closing_time;
+        day !== undefined || null ? openingTime.day = day : openingTime.day;
+
+        return await openingTime.save();
     }
 
     public async delete(id: number): Promise<void | null> {
-        const OpeningTime = await this.OpeningTime.findOne({
+        const openingTime = await this.OpeningTime.findOne({
             where: {
                 id
             }
         });
-        if (OpeningTime === null) {
+        if (openingTime === null) {
             return null;
         }
-        if (id !== OpeningTime.id){
+        if (id !== openingTime.id){
             return null;
         }
-        return await OpeningTime.destroy();
+        return await openingTime.destroy();
     }
 
 }
