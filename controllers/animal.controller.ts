@@ -81,4 +81,29 @@ export class AnimalController {
             return healthBook;
         }
     }
+
+    public async modify(id:number, space_id: number): Promise<AnimalInstance | null>{
+        const animal = await this.Animal.findOne({
+            where:{
+                id
+            }
+        });
+
+        if (animal === null){
+            return null;
+        }
+
+        const space = await this.Space.findOne({
+            where:{
+                "id" : space_id
+            }
+        });
+
+        if (space === null){
+            return null;
+        }
+
+        animal.setSpace(space);
+        return await animal.save();
+    }
 }
