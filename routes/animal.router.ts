@@ -1,6 +1,7 @@
 import express from "express";
 import {AnimalController} from "../controllers/animal.controller";
 import {veterinaryMiddleware} from "../middlewares/veterinary.middleware";
+import {SpaceController} from "../controllers/space.controller";
 
 const animalRouter = express.Router();
 
@@ -81,6 +82,28 @@ animalRouter.post("/addHealthBook", veterinaryMiddleware, async function(req, re
         res.status(400).end();
     }
 });
+
+animalRouter.post("/changeSpace", async function(req, res){
+    const id = req.body.id;
+    const space = req.body.space;
+
+    if (id === null || space === null){
+        res.status(400);
+        res.json({
+            "error" : "Missing fields"
+        })
+    }
+
+    const animalController = await AnimalController.getInstance();
+    const animal = await animalController.modify(id, space);
+    if (animal === null){
+        res.status(404).end();
+        return;
+    } else {
+        res.status(204);
+        res.json(animal);
+    }
+})
 
 export {
     animalRouter
