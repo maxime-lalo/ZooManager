@@ -14,7 +14,7 @@ import {UserPassInstance} from "./user_pass.model";
 
 export interface PassProps {
     id: number;
-    name: string;
+    name_pass: string;
 }
 
 export interface PassCreationProps extends Optional<PassProps, "id">{}
@@ -38,7 +38,7 @@ export default function(sequelize: Sequelize): ModelCtor<PassInstance> {
             primaryKey: true,
             autoIncrement: true
         },
-        name: {
+        name_pass: {
             type: DataTypes.STRING,
         },
     }, {
