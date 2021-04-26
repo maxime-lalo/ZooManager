@@ -26,7 +26,7 @@ export class PassController {
         });
     }
 
-    public async modify(id: number, name: string): Promise<PassInstance | null> {
+    public async modify(id: number, name_pass: string): Promise<PassInstance | null> {
         const pass = await this.Pass.findOne({
             where: {
                 id
@@ -38,7 +38,7 @@ export class PassController {
         if (id !== pass.id){
             return null;
         }
-        pass.name = name;
+        pass.name_pass = name_pass;
         return await pass.save();
     }
 

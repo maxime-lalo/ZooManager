@@ -4,14 +4,14 @@ import {PassController} from "../controllers/pass.controller";
 const passRouter = express.Router();
 
 passRouter.post("/add", async function (req, res) {
-    const name = req.body.name;
-    if (name === undefined) {
+    const name_pass = req.body.name_pass;
+    if (name_pass === undefined) {
         res.status(400).end();
         return;
     }
     const passController = await PassController.getInstance();
     const pass = await passController.add({
-        name
+        name_pass
     });
     if (pass !== null){
         res.status(201);
@@ -23,13 +23,13 @@ passRouter.post("/add", async function (req, res) {
 
 passRouter.post("/update", async function (req, res) {
     const id = req.body.id;
-    const name = req.body.name;
-    if (id === undefined || name === undefined) {
+    const name_pass = req.body.name_pass;
+    if (id === undefined || name_pass === undefined) {
         res.status(400).end();
         return;
     }
     const passController = await PassController.getInstance();
-    const uPass = await passController.modify(id, name);
+    const uPass = await passController.modify(id, name_pass);
     if (uPass === null){
         res.status(404).end();
         return;
