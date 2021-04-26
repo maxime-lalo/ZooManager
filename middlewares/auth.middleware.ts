@@ -11,10 +11,15 @@ export async function authMiddleware(req: express.Request, res: express.Response
             next();
             return;
         } else {
-            res.status(403).end();
-            return;
+            res.status(403);
+            res.json({
+                "error": "You must be logged in to use this API"
+            });
         }
     } else {
-        res.status(401).end();
+        res.status(401);
+        res.json({
+            "error": "You must have an account to use this API"
+        });
     }
 }
