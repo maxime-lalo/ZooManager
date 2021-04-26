@@ -55,6 +55,43 @@ zooRouter.post("/joinSpace",authMiddleware, async function(req, res){
     }
 });
 
+
+zooRouter.post("/leaveZoo", authMiddleware, async function(req, res){
+    const zooController = await ZooController.getInstance();
+    const authController = await AuthController.getInstance();
+
+    const auth = req.headers["authorization"];
+
+    if (auth !== undefined) {
+        const token = auth.slice(7);
+        const session = await authController.getSession(token);
+        const user = await session?.getUser();
+
+        if (user === undefined){
+            res.status(400);
+            res.json({
+                "error" : "Incorrect user"
+            });
+        }else{
+            const logs = await zooController.leaveZoo(user.id);
+            if (logs === null){
+                res.status(400);
+                res.json({
+                    "error" : "Incorrect fields"
+                });
+            }else{
+                res.status(201);
+                res.json(logs);
+            }
+        }
+    }else{
+        res.status(403);
+        res.json({
+            "error" : "Must have a valid token"
+        });
+    }
+});
+
 export {
     zooRouter
 }

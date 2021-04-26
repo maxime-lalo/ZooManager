@@ -107,6 +107,12 @@ export class ZooController {
                 ]
             });
 
+            const lastSpaceInSpaceObj = await lastSpaceIn?.getSpace();
+
+            // Si on essaie de sortir et d'entrer dans le même space
+            if(spaceIn.id === await lastSpaceInSpaceObj?.id){
+                return null;
+            }
             const spaceLogOut = await this.Space_Logs.create({
                 "in_out": false,
                 "timestamp": new Date()
@@ -131,5 +137,46 @@ export class ZooController {
         await spaceLogIn.save();
 
         return spaceLogIn;
+    }
+
+    public async leaveZoo(userId: number): Promise<UserInstance | null>{
+        const user = await this.User.findOne({
+            where: {
+                "id" : userId
+            }
+        });
+
+        if(user === null || user.in_zoo === false){
+            return null;
+        }
+
+        const lastSpaceIn = await this.Space_Logs.findOne({
+            where: {
+                "in_out": true
+            },
+            include:{
+                model: this.User,
+                as: this.User.tableName,
+                where:{
+                    '$User.id$' : userId
+                }
+            },
+            order: [
+                ['timestamp', 'DESC']
+            ]
+        });
+
+        const spaceLogOut = await this.Space_Logs.create({
+            "in_out": false,
+            "timestamp": new Date()
+        });
+
+        spaceLogOut.setSpace(await lastSpaceIn?.getSpace());
+        spaceLogOut.setUser(user);
+        await spaceLogOut.save();
+        
+        user.in_zoo = false;
+        await user.save();
+        return user;
     }
 }
